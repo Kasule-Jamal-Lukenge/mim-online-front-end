@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 export const fetchSummary = createAsyncThunk('analytics/fetchSummary', async ()=>{
     const res = await api.get('/admin/analytics/summary');
