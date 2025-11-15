@@ -1,6 +1,7 @@
 import React, {useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 export default function RegistrationPage(){
     const {register} = useContext(AuthContext);
@@ -29,14 +30,17 @@ export default function RegistrationPage(){
 
         try{
             await register(form);
+            toast.success("Account Created Successfully");
             navigate("/admin/dashboard");
         }catch(err){
             console.error("Registration error:", err);
             if(err.response && err.response.data.errors){
                 const firstError = Object.values(err.response.data.errors)[0][0];
-                setError(firstError);
+                toast.error(firstError);
+                // setError(firstError);
             }else{
-                setError("Registration failed. Please try again.");
+                // setError("Registration failed. Please try again.");
+                toast.error("Registration failed. Please try again.");
             }
             setLoading(false);
         };
