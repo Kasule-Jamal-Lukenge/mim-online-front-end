@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useMemo } from "react";
 import { AuthContext } from "../context/AuthContext";
 import api from "../api/axios";
 import toast from "react-hot-toast";
@@ -10,6 +10,9 @@ export default function AdminCategories() {
   const [showModal, setShowModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [form, setForm] = useState({ name: "", description: "" });
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   // Fetch categories
   const fetchCategories = async () => {
@@ -82,6 +85,33 @@ export default function AdminCategories() {
     }
   };
 
+  // Filter categories by search input
+  const filteredCategories = useMemo(() => {
+    return categories.filter(
+      (cat) =>
+        cat.name.toLowerCase().includes(search.toLowerCase()) ||
+        (cat.description &&
+          cat.description.toLowerCase().includes(search.toLowerCase()))
+    );
+  }, [search, categories]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredCategories.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedCategories = filteredCategories.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  };
+
+  // Reset to first page when search or itemsPerPage change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, itemsPerPage]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -92,20 +122,45 @@ export default function AdminCategories() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <div className="flex justify-between items-center mb-6">
+      {/* Header + Actions */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold text-blue-700">Manage Categories</h1>
-        <button
-          onClick={() => {
-            setEditingCategory(null);
-            setForm({ name: "", description: "" });
-            setShowModal(true);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-        >
-          + Add Category
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Search Bar */}
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search categories..."
+            className="border border-gray-300 rounded-md p-2 w-64 focus:ring focus:ring-blue-300"
+          />
+
+          {/* Items per page dropdown */}
+          <select
+            value={itemsPerPage}
+            onChange={(e) => setItemsPerPage(Number(e.target.value))}
+            className="border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-300"
+          >
+            <option value={5}>5 per page</option>
+            <option value={10}>10 per page</option>
+            <option value={15}>15 per page</option>
+          </select>
+
+          {/* Add Button */}
+          <button
+            onClick={() => {
+              setEditingCategory(null);
+              setForm({ name: "", description: "" });
+              setShowModal(true);
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            + Add Category
+          </button>
+        </div>
       </div>
 
+      {/* Table */}
       <div className="bg-white shadow rounded-lg p-4 overflow-x-auto">
         <table className="w-full text-sm text-left border border-gray-200">
           <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
@@ -117,11 +172,15 @@ export default function AdminCategories() {
             </tr>
           </thead>
           <tbody>
-            {categories.length > 0 ? (
-              categories.map((cat, index) => (
+            {paginatedCategories.length > 0 ? (
+              paginatedCategories.map((cat, index) => (
                 <tr key={cat.id} className="hover:bg-gray-50">
-                  <td className="p-3 border text-gray-600">{index + 1}</td>
-                  <td className="p-3 border font-medium text-gray-800">{cat.name}</td>
+                  <td className="p-3 border text-gray-600">
+                    {startIndex + index + 1}
+                  </td>
+                  <td className="p-3 border font-medium text-gray-800">
+                    {cat.name}
+                  </td>
                   <td className="p-3 border text-gray-600">
                     {cat.description || "—"}
                   </td>
@@ -150,6 +209,49 @@ export default function AdminCategories() {
             )}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-4 space-x-2">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 border rounded ${
+                currentPage === 1
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => goToPage(i + 1)}
+                className={`px-3 py-1 border rounded ${
+                  currentPage === i + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-white hover:bg-gray-100"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 border rounded ${
+                currentPage === totalPages
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Modal */}
