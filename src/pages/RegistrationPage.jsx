@@ -128,7 +128,7 @@ export default function RegistrationPage(){
                         {loading ? "Registering..." : "Register"}
                     </button>
 
-                    <p className="text-center text-sm mt-4">
+                    <p className="text-center text-dark text-sm mt-4">
                         Already Have An Account? {" "}
                         <span
                             onClick={() => navigate("/login")}
