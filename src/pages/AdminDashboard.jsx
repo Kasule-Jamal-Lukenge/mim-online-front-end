@@ -58,17 +58,37 @@ export default function AdminDashboard(){
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow text-center">
-                <h2 className="text-gray-500 text-sm">Orders</h2>
+                <h2 className="text-gray-500 text-sm">Total Orders</h2>
                 <p className="text-2xl font-bold text-orange-600">
-                    {stats.totalOrders}
+                    {stats.total_orders}
                 </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow p-6 text-center">
+                <h2 className="text-gray-600">Delivered Orders</h2>
+                <p className="text-2xl font-semibold text-green-600">{stats.delivered_orders}</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow p-6 text-center">
+                <h2 className="text-gray-600">Orders In Delivery</h2>
+                <p className="text-2xl font-semibold text-yellow-500">{stats.in_delivery_orders}</p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow p-6 text-center">
+                <h2 className="text-gray-600">Received Orders</h2>
+                <p className="text-2xl font-semibold text-purple-600">{stats.received_orders}</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow text-center">
                 <h2 className="text-gray-500 text-sm">Users</h2>
                 <p className="text-2xl font-bold text-purple-600">
-                    {stats.totalUsers}
+                    {stats.total_users}
                 </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow p-6 text-center">
+                <h2 className="text-gray-600">Total Sales</h2>
+                <p className="text-2xl font-semibold text-pink-600">${stats.total_sales}</p>
             </div>
 
             
