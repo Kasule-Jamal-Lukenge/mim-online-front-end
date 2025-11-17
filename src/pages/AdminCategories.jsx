@@ -22,8 +22,8 @@ export default function AdminCategories() {
       });
       setCategories(res.data);
     } catch (err) {
-      console.error("Error fetching categories:", err);
-      toast.error("Failed to load categories.");
+      console.error("Error Fetching Categories:", err);
+      toast.error("Failed To Load Categories.");
     } finally {
       setLoading(false);
     }
@@ -77,11 +77,11 @@ export default function AdminCategories() {
       await api.delete(`/admin/categories/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success("Category deleted successfully!");
+      toast.success("Category Deleted Successfully!");
       fetchCategories();
     } catch (err) {
-      console.error("Error deleting category:", err);
-      toast.error("Failed to delete category.");
+      console.error("Error Deleting Category:", err);
+      toast.error("Failed To Delete Category.");
     }
   };
 
@@ -90,8 +90,7 @@ export default function AdminCategories() {
     return categories.filter(
       (cat) =>
         cat.name.toLowerCase().includes(search.toLowerCase()) ||
-        (cat.description &&
-          cat.description.toLowerCase().includes(search.toLowerCase()))
+        (cat.description && cat.description.toLowerCase().includes(search.toLowerCase()))
     );
   }, [search, categories]);
 
@@ -104,7 +103,8 @@ export default function AdminCategories() {
   );
 
   const goToPage = (page) => {
-    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+    if (page >= 1 && page <= totalPages) 
+      setCurrentPage(page);
   };
 
   // Reset to first page when search or itemsPerPage change
@@ -265,7 +265,7 @@ export default function AdminCategories() {
             <form onSubmit={handleSave} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Name
+                  Name:
                 </label>
                 <input
                   type="text"
@@ -274,13 +274,13 @@ export default function AdminCategories() {
                   onChange={handleChange}
                   required
                   className="w-full mt-1 p-2 border rounded focus:ring focus:ring-blue-300"
-                  placeholder="Enter category name"
+                  placeholder="Enter category name..."
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Description
+                  Description:
                 </label>
                 <textarea
                   name="description"
@@ -288,7 +288,7 @@ export default function AdminCategories() {
                   onChange={handleChange}
                   rows="3"
                   className="w-full mt-1 p-2 border rounded focus:ring focus:ring-blue-300"
-                  placeholder="Enter category description"
+                  placeholder="Enter category description..."
                 />
               </div>
 

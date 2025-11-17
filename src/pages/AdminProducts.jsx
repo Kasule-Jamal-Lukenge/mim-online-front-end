@@ -44,8 +44,8 @@ export default function AdminProducts(){
         });
         setCategories(res.data);
         } catch (err) {
-        console.error("Error fetching categories:", err);
-        toast.error("Failed to load categories.");
+        console.error("Error Fetching Categories:", err);
+        toast.error("Failed To Load Categories.");
         }
     };
 
@@ -54,33 +54,33 @@ export default function AdminProducts(){
         fetchCategories();
     }, [token]);
 
-    // Handle input change
+    // Handle Input Change
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    // Add or Update product
+    // Add Or Update product
     const handleSave = async (e) => {
         e.preventDefault();
         try {
-        if (editingProduct) {
-            await api.put(`/admin/products/${editingProduct.id}`, form, {
-            headers: { Authorization: `Bearer ${token}` },
-            });
-            toast.success("Product Updated Successfully!");
-        } else {
-            await api.post("/admin/products", form, {
-            headers: { Authorization: `Bearer ${token}` },
-            });
-            toast.success("Product Added Successfully!");
-        }
-        setShowModal(false);
-        setForm({ name: "", description: "", price: "", category_id: "" });
-        setEditingProduct(null);
-        fetchProducts();
+            if (editingProduct) {
+                await api.put(`/admin/products/${editingProduct.id}`, form, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                toast.success("Product Updated Successfully!");
+            } else {
+                await api.post("/admin/products", form, {
+                headers: { Authorization: `Bearer ${token}` },
+                });
+                toast.success("Product Added Successfully!");
+            }
+            setShowModal(false);
+            setForm({ name: "", description: "", price: "", category_id: "" });
+            setEditingProduct(null);
+            fetchProducts();
         } catch (err) {
-        console.error("Error Saving Product:", err);
-        toast.error("Failed To Save Product.");
+            console.error("Error Saving Product:", err);
+            toast.error("Failed To Save Product.");
         }
     };
 
@@ -88,10 +88,10 @@ export default function AdminProducts(){
     const handleEdit = (product) => {
         setEditingProduct(product);
         setForm({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        category_id: product.category_id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            category_id: product.category_id,
         });
         setShowModal(true);
     };
@@ -141,9 +141,9 @@ export default function AdminProducts(){
 
     if (loading) {
         return (
-        <div className="flex justify-center items-center min-h-screen">
-            <p className="text-gray-500 text-lg">Loading products...</p>
-        </div>
+            <div className="flex justify-center items-center min-h-screen">
+                <p className="text-gray-500 text-lg">Loading products...</p>
+            </div>
         );
     }
 
