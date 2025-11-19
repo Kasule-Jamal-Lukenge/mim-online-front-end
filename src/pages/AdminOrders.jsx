@@ -173,6 +173,32 @@ export default function AdminOrders() {
     }
   };
 
+  // ===== ACTION HANDLERS =====
+const handleView = (order) => {
+  setSelectedOrder(order);
+  setShowDetails(true);
+};
+
+const handleEdit = (order) => {
+  setSelectedOrder(order);
+  setShowEditModal(true);
+};
+
+const handleDelete = async (orderId) => {
+  if (!window.confirm("Are you sure you want to delete this order?")) return;
+  try {
+    await api.delete(`/admin/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    toast.success("Order deleted successfully!");
+    fetchOrders();
+  } catch (err) {
+    console.error("Error deleting order:", err);
+    toast.error("Failed to delete order.");
+  }
+};
+
+
   useEffect(() => {
     fetchOrders();
   }, [token]);
@@ -230,109 +256,71 @@ export default function AdminOrders() {
         ))}
       </div>
 
-      {/* Orders Table */}
-      <div className="bg-white shadow rounded-lg p-4 overflow-x-auto">
-        <table className="w-full text-sm text-left border border-gray-200">
-          <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
-            <tr>
-              <th className="p-3 border">#</th>
-              <th className="p-3 border">Customer</th>
-              <th className="p-3 border">Products</th>
-              <th className="p-3 border">Quantities</th>
-              <th className="p-3 border">Total ($)</th>
-              <th className="p-3 border">Status</th>
-              <th className="p-3 border text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.length > 0 ? (
-              filteredOrders.map((order, index) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="p-3 border text-gray-600">{index + 1}</td>
-
-                  {/* Customer name */}
-                  {/* <td className="p-3 border">
-                    {order.user
-                      ? `${order.user.first_name} ${order.user.last_name}`
-                      : "N/A"}
-                  </td> */}
-
-                  <td className="p-3 border text-gray-800">
-  {order.user
-    ? `${order.user.first_name ?? ""} ${order.user.last_name ?? ""}`.trim()
-    : "N/A"}
-</td>
-
-                  {/* Product names */}
-                  <td className="p-3 border text-gray-700">
-                    {order.items && order.items.length > 0 ? (
-                      <ul className="list-disc list-inside">
-                        {order.items.map((item) => (
-                          <li key={item.id}>{item.product?.name}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      "—"
-                    )}
-                  </td>
-
-                  {/* Quantities */}
-                  <td className="p-3 border text-gray-700">
-                    {order.items && order.items.length > 0 ? (
-                      <ul className="list-disc list-inside">
-                        {order.items.map((item) => (
-                          <li key={item.id}>{item.quantity}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      "—"
-                    )}
-                  </td>
-
-                  {/* Total */}
-                  <td className="p-3 border font-semibold text-green-600">
-                    ${order.total_price}
-                  </td>
-
-                  {/* Status */}
-                  <td className="p-3 border text-blue-700 font-medium">
-                    {order.status}
-                  </td>
-
-                  {/* Actions */}
-                  <td className="p-3 border text-center">
-                    {order.status === "Received" && (
-                      <button
-                        onClick={() =>
-                          handleStatusChange(order.id, "In-Delivery")
-                        }
-                        className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500"
-                      >
-                        Mark In-Delivery
-                      </button>
-                    )}
-
-                    {order.status === "In-Delivery" && (
-                      <button
-                        onClick={() => handleStatusChange(order.id, "Delivered")}
-                        className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
-                      >
-                        Mark Delivered
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" className="text-center p-4 text-gray-400">
-                  No orders found under "{activeTab}".
+    {/* Orders Table */}
+    <div className="bg-white shadow rounded-lg p-4 overflow-x-auto">
+      <table className="w-full text-sm text-left border border-gray-200">
+        <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+          <tr>
+            <th className="p-3 border">#</th>
+            <th className="p-3 border">Order No.</th>
+            <th className="p-3 border">Customer</th>
+            <th className="p-3 border">Status</th>
+            <th className="p-3 border">Date</th>
+            <th className="p-3 border text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((order, index) => (
+              <tr key={order.id} className="hover:bg-gray-50">
+                <td className="p-3 border text-gray-600">{index + 1}</td>
+                <td className="p-3 border font-semibold text-blue-600">
+                  {order.order_number}
+                </td>
+                <td className="p-3 border text-gray-800">
+                  {order.user
+                    ? `${order.user.first_name ?? ""} ${order.user.last_name ?? ""}`.trim()
+                    : "N/A"}
+                </td>
+                <td className="p-3 border text-gray-600">
+                 { order.status }
+                </td>
+                <td className="p-3 border text-gray-600">
+                  {new Date(order.created_at).toLocaleDateString()}
+                </td>
+                <td className="p-3 border text-center flex gap-2 justify-center">
+                  <button
+                    onClick={() => handleEdit(order)}
+                    className="px-3 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleView(order)}
+                    className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Details
+                  </button>
+                  <button
+                    onClick={() => handleDelete(order.id)}
+                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="text-center p-4 text-gray-400">
+                No orders found under "{activeTab}".
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+
     </div>
   );
 }
