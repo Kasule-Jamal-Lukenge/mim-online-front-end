@@ -171,7 +171,7 @@ export default function AdminOrders() {
                       onClick={() => handleEdit(order)}
                       className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-500"
                     >
-                      Edit
+                      Change Status
                     </button>
                   </td>
 
@@ -180,7 +180,7 @@ export default function AdminOrders() {
                       onClick={() => handleView(order)}
                       className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
                     >
-                      Details
+                      <i className="fas fa-eye"></i>
                     </button>
 
                     <button
@@ -190,7 +190,7 @@ export default function AdminOrders() {
                       }}
                       className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                     >
-                      Delete
+                      <i className="fas fa-trash-alt"></i>
                     </button>
 
                   </td>
