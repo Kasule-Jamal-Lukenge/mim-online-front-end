@@ -13,6 +13,13 @@ export default function AdminOrders() {
   const [showDetails, setShowDetails] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
+  // const [showDeleteModal, setShowDeleteModal] = useState(false);
+  // const [orderIdToDelete, setOrderIdToDelete] = useState(null);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [orderIdToDelete, setOrderIdToDelete] = useState(null);
+
+
   // Fetching orders
   const fetchOrders = async () => {
     try {
@@ -130,6 +137,7 @@ export default function AdminOrders() {
               <th className="p-3 border">Customer</th>
               <th className="p-3 border">Status</th>
               <th className="p-3 border">Date</th>
+              <th>Toggle Status</th>
               <th className="p-3 border text-center">Actions</th>
             </tr>
           </thead>
@@ -137,40 +145,54 @@ export default function AdminOrders() {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order, index) => (
                 <tr key={order.id} className="hover:bg-gray-50">
+
                   <td className="p-3 border text-gray-600">{index + 1}</td>
+
                   <td className="p-3 border font-semibold text-blue-600">
                     {order.order_number}
                   </td>
+
                   <td className="p-3 border text-gray-800">
                     {order.user
                       ? `${order.user.first_name ?? ""} ${order.user.last_name ?? ""}`.trim()
                       : "N/A"}
                   </td>
+
                   <td className="p-3 border text-gray-600">
-                  { order.status }
+                    { order.status }
                   </td>
+
                   <td className="p-3 border text-gray-600">
                     {new Date(order.created_at).toLocaleDateString()}
                   </td>
-                  <td className="p-3 border text-center flex gap-2 justify-center">
+
+                  <td className="p-3 border text-gray-600">
                     <button
                       onClick={() => handleEdit(order)}
                       className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-500"
                     >
                       Edit
                     </button>
+                  </td>
+
+                  <td className="p-3 border text-center flex gap-2 justify-center">
                     <button
                       onClick={() => handleView(order)}
                       className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
                     >
                       Details
                     </button>
+
                     <button
-                      onClick={() => handleDelete(order.id)}
+                      onClick={() => {
+                        setOrderIdToDelete(order.id)
+                        setShowDeleteModal(true);
+                      }}
                       className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                     >
                       Delete
                     </button>
+
                   </td>
                 </tr>
               ))
@@ -320,6 +342,48 @@ export default function AdminOrders() {
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
                 Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== DELETE CONFIRMATION MODAL ===== */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-2xl font-bold text-red-600 mb-4 text-center">
+              Confirm Deletion
+            </h2>
+            <p className="text-gray-700 text-center mb-6">
+              Are You Sure You Want To Delete This Order?
+            </p>
+
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await api.delete(`/admin/orders/${orderIdToDelete}`, {
+                      headers: { Authorization: `Bearer ${token}` },
+                    });
+                    toast.success("Order Deleted Successfully!");
+                    setShowDeleteModal(false);
+                    setOrderIdToDelete(null);
+                    fetchOrders();
+                  } catch (err) {
+                    console.error("Error Deleting Order:", err);
+                    toast.error("Failed To Delete Order.");
+                  }
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Yes, Delete
               </button>
             </div>
           </div>
