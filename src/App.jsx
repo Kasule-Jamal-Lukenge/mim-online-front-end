@@ -6,11 +6,13 @@ import RegistrationPage from "./pages/RegistrationPage";
 import AdminCategories from "./pages/AdminCategories";
 import AdminProducts from "./pages/AdminProducts";
 import AdminOrders from "./pages/AdminOrders";
+import HomeIndexPage from "./pages/HomeIndexPage";
 
 export default function App(){
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomeIndexPage />}/>
         <Route path="/register" element={<RegistrationPage />}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
