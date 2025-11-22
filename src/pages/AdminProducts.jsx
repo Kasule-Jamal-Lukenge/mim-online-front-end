@@ -14,8 +14,8 @@ export default function AdminProducts(){
         name: "",
         description: "",
         price: "",
-        stock: "",
         category_id: "",
+        image: null,
     });
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -59,30 +59,90 @@ export default function AdminProducts(){
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
+    // // Add Or Update product
+    // const handleSave = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         if (editingProduct) {
+    //             await api.put(`/admin/products/${editingProduct.id}`, form, {
+    //                 headers: { Authorization: `Bearer ${token}` },
+    //             });
+    //             toast.success("Product Updated Successfully!");
+    //         } else {
+    //             console.log(form);
+    //             await api.post("/admin/products", form, {
+    //             headers: { Authorization: `Bearer ${token}` },
+    //             });
+    //             toast.success("Product Added Successfully!");
+    //         }
+    //         setShowModal(false);
+    //         setForm({ name: "", description: "", price: "", category_id: "" });
+    //         setEditingProduct(null);
+    //         fetchProducts();
+    //     } catch (err) {
+    //         console.error("Error Saving Product:", err);
+    //         toast.error("Failed To Save Product.");
+    //     }
+    // };
+
     // Add Or Update product
     const handleSave = async (e) => {
-        e.preventDefault();
-        try {
-            if (editingProduct) {
-                await api.put(`/admin/products/${editingProduct.id}`, form, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                toast.success("Product Updated Successfully!");
-            } else {
-                await api.post("/admin/products", form, {
-                headers: { Authorization: `Bearer ${token}` },
-                });
-                toast.success("Product Added Successfully!");
-            }
-            setShowModal(false);
-            setForm({ name: "", description: "", price: "", category_id: "" });
-            setEditingProduct(null);
-            fetchProducts();
-        } catch (err) {
-            console.error("Error Saving Product:", err);
-            toast.error("Failed To Save Product.");
+    e.preventDefault();
+
+    try {
+        if (editingProduct) {
+        // ✅ For updates, still allow JSON if no new file
+        const formData = new FormData();
+        formData.append("name", form.name);
+        formData.append("description", form.description);
+        formData.append("price", form.price);
+        formData.append("stock", form.stock);
+        formData.append("category_id", form.category_id);
+        if (form.image) formData.append("image", form.image);
+
+        await api.put(`/admin/products/${editingProduct.id}`, formData, {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+            },
+        });
+        toast.success("Product Updated Successfully!");
+        } else {
+        // For adding new product, send FormData with the image
+        const formData = new FormData();
+        formData.append("name", form.name);
+        formData.append("description", form.description);
+        formData.append("price", form.price);
+        formData.append("stock", form.stock);
+        formData.append("category_id", form.category_id);
+        if (form.image) formData.append("image", form.image);
+
+        await api.post("/admin/products", formData, {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+            },
+        });
+        toast.success("Product Added Successfully!");
         }
+
+        setShowModal(false);
+        setForm({
+        name: "",
+        description: "",
+        price: "",
+        stock: "",
+        category_id: "",
+        image: null,
+        });
+        setEditingProduct(null);
+        fetchProducts();
+    } catch (err) {
+        console.error("Error Saving Product:", err.response?.data || err);
+        toast.error("Failed To Save Product.");
+    }
     };
+
 
     // Edit product
     const handleEdit = (product) => {
@@ -347,19 +407,6 @@ export default function AdminProducts(){
                     />
                     </div>
 
-                    <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                        Stock
-                    </label>
-                    <input
-                        type="number"
-                        name="stock"
-                        value={form.stock}
-                        onChange={handleChange}
-                        required
-                        className="w-full mt-1 p-2 border rounded focus:ring focus:ring-blue-300"
-                    />
-                    </div>
                 </div>
 
                 <div>
@@ -381,6 +428,22 @@ export default function AdminProducts(){
                     ))}
                     </select>
                 </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Product Image
+                    </label>
+                    <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        onChange={(e) =>
+                        setForm({ ...form, image: e.target.files[0] })
+                        }
+                        className="w-full mt-1 p-2 border rounded focus:ring focus:ring-blue-300"
+                    />
+                </div>
+
 
                 <div className="flex justify-end space-x-2 mt-4">
                     <button

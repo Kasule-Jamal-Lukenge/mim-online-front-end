@@ -277,7 +277,7 @@ export default function AdminOrders() {
             <div className="text-right mt-4">
               <button
                 onClick={() => setShowDetails(false)}
-                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-gray-700"
               >
                 Close
               </button>
