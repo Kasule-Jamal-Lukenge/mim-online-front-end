@@ -1,8 +1,16 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
+
+  const navigate = useNavigate();
+
+  const handleCheckOut = () => {
+    navigate("/receipt", {state:{cartItems}});
+  }
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -65,7 +73,10 @@ export default function CartPage() {
             <h2 className="text-xl font-bold text-gray-800">
               Total: ${total.toFixed(2)}
             </h2>
-            <button className="bg-blue-600 text-white px-6 py-2 mt-4 rounded hover:bg-blue-700">
+            <button 
+                className="bg-blue-600 text-white px-6 py-2 mt-4 rounded hover:bg-blue-700"
+                onClick={handleCheckOut}
+            >
               Proceed to Checkout
             </button>
           </div>

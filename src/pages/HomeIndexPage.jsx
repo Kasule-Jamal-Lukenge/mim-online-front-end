@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import api from '../api/axios';
 import { useCart } from '../context/CartContext';
 import { FaShoppingCart } from "react-icons/fa";
+import toast from 'react-hot-toast';
 
 export default function HomeIndexPage() {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ export default function HomeIndexPage() {
       return;
     }
     console.log('Product added to cart:', product.name);
+    toast.success("Product Added To Cart!");
     addToCart(product);
   };
 

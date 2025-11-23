@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const CartContext = createContext();
 
@@ -26,6 +27,7 @@ export const CartProvider = ({children}) => {
 
     const removeFromCart = (id) => {
         setCartItems((prev) => prev.filter((item) => item.id !== id));
+        toast.error("Product Removed From Cart");
     };
 
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
