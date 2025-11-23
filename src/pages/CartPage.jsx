@@ -38,7 +38,7 @@ export default function CartPage() {
                 >
                   -
                 </button>
-                <span>{item.quantity}</span>
+                <span className="text-gray-700 p-2" style={{ border:" 1px solid", borderRadius:"4px"} }>{item.quantity}</span>
                 <button
                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   className="px-2 py-1 bg-gray-200 rounded"
@@ -55,7 +55,7 @@ export default function CartPage() {
                   onClick={() => removeFromCart(item.id)}
                   className="bg-red-600 text-white-600 text-sm mt-1"
                 >
-                  Remove
+                  <i className="fa fa-trash"></i>
                 </button>
               </div>
             </div>

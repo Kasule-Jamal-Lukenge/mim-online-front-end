@@ -30,7 +30,7 @@ export default function HomeIndexPage() {
     fetchData();
   }, []);
 
-  const { cartItems, addToCart, totalItems } = useCart();
+  const { cartItems, addToCart, updateQuantity, totalItems } = useCart();
 
   const handleAddToCart = (product) => {
     if (!user) {
