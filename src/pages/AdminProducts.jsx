@@ -261,7 +261,7 @@ export default function AdminProducts(){
                 <tr>
                 <th className="p-3 border">#</th>
                 <th className="p-3 border">Name</th>
-                <th className="p-3 border">Description</th>
+                {/* <th className="p-3 border">Description</th> */}
                 <th className="p-3 border">Price ($)</th>
                 <th className="p-3 border">Category</th>
                 <th className="p-3 border text-center">Actions</th>
@@ -277,9 +277,9 @@ export default function AdminProducts(){
                     <td className="p-3 border font-medium text-gray-800">
                         {prod.name}
                     </td>
-                    <td className="p-3 border text-gray-600">
+                    {/* <td className="p-3 border text-gray-600">
                         {prod.description || "—"}
-                    </td>
+                    </td> */}
                     <td className="p-3 border text-green-600 font-semibold">
                         ${prod.price}
                     </td>

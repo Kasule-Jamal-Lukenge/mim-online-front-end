@@ -48,7 +48,7 @@ export default function HomeIndexPage() {
           <Link to="/products" className="hover:text-blue-600">Products</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
           {user ? (
-            <Link to="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Dashboard</Link>
+            <Link to="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Logout</Link>
           ) : (
             <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</Link>
           )}
@@ -68,8 +68,15 @@ export default function HomeIndexPage() {
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Product Categories</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {categories.slice(0, 4).map((cat) => (
-            <div key={cat.id} className="bg-white rounded-lg shadow-md p-4 text-center">
-              <img src={cat.image_url} alt={cat.name} className="w-full h-40 object-cover rounded-md mb-3" />
+            <div 
+            key={cat.id} 
+            className="bg-white rounded-lg shadow-md p-4 text-center"
+            >
+              <img 
+                src={cat.image_url ? cat.image_url : "/no-image.png"} 
+                alt={cat.name} 
+                className="w-full h-40 object-cover rounded-md mb-3" 
+              />
               <h3 className="text-lg font-semibold text-gray-700">{cat.name}</h3>
             </div>
           ))}

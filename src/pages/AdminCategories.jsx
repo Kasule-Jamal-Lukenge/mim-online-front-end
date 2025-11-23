@@ -9,7 +9,12 @@ export default function AdminCategories() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
-  const [form, setForm] = useState({ name: "", description: "" });
+  const [form, setForm] = useState({
+    name: "", 
+    description: "",
+    image: "" 
+  });
+  const [preview, setPreview] = useState(null);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -35,21 +40,44 @@ export default function AdminCategories() {
 
   // Handle input change
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    const {name, value, files} = e.target;
+    if(name === "image" && files.length >0){
+      setForm({...form, image: files[0]});
+      setPreview(URL.createObjectURL(files[0]));
+    }else{
+      setForm({...form, [name]: value});
+    } 
+  }
+  // const handleChange = (e) => {
+  //   setForm({ ...form, [e.target.name]: e.target.value });
+  // };
 
   // Add or Update category
   const handleSave = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", form.name)
+    formData.append("description", form.description)
+    if(form.image){
+      formData.append("image", form.image);
+    }
+
     try {
       if (editingCategory) {
-        await api.put(`/admin/categories/${editingCategory.id}`, form, {
-          headers: { Authorization: `Bearer ${token}` },
+        await api.put(`/admin/categories/${editingCategory.id}?_method=PUT`, formData, {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
+          },
         });
         toast.success("Category updated successfully!");
       } else {
-        await api.post("/admin/categories", form, {
-          headers: { Authorization: `Bearer ${token}` },
+        await api.post("/admin/categories", formData, {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
+          },
         });
         toast.success("Category added successfully!");
       }
@@ -66,7 +94,11 @@ export default function AdminCategories() {
   // Edit category
   const handleEdit = (category) => {
     setEditingCategory(category);
-    setForm({ name: category.name, description: category.description });
+    setForm({ 
+      name: category.name, 
+      description: category.description,
+      image: null, 
+    });
     setShowModal(true);
   };
 
@@ -290,6 +322,24 @@ export default function AdminCategories() {
                   className="w-full mt-1 p-2 border rounded focus:ring focus:ring-blue-300"
                   placeholder="Enter category description..."
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="w-full mt-1 p-2 border rounded"
+                />
+                {preview && (
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className="w-24 h-24 object-cover mt-2 rounded"
+                  />
+                )}
               </div>
 
               <div className="flex justify-end space-x-2 mt-4">
