@@ -219,15 +219,15 @@ export default function AdminCategories() {
                   <td className="p-3 border text-center">
                     <button
                       onClick={() => handleEdit(cat)}
-                      className="px-3 py-1 text-sm bg-yellow-400 text-white rounded hover:bg-yellow-500 mr-2"
+                      className="px-3 py-1 text-sm bg-blue-400 text-white rounded hover:bg-yellow-500 mr-2"
                     >
-                      Edit
+                      <i className="fa fa-edit"></i>
                     </button>
                     <button
                       onClick={() => handleDelete(cat.id)}
                       className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
                     >
-                      Delete
+                      <i className="fa fa-trash"></i>
                     </button>
                   </td>
                 </tr>

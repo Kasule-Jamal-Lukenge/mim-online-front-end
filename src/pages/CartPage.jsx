@@ -2,6 +2,7 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import NavbarComponent from "../components/NavbarComponent";
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
@@ -19,6 +20,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
+      <NavbarComponent/>
       <h1 className="text-3xl font-bold text-blue-700 mb-6">Your Cart</h1>
 
       {cartItems.length === 0 ? (

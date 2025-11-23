@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import NavbarComponent from "../components/NavbarComponent";
 
 function ReceiptPage() {
   const location = useLocation();
@@ -13,6 +14,8 @@ function ReceiptPage() {
 
   return (
     <div className="min-h-screen bg-white p-10">
+      <NavbarComponent/>
+        <h1 className="text-3xl font-bold text-blue-700 mb-6">Review Your Purchases And Confirm Order</h1>
         <div className="bg-white max-w-2xl mx-auto mt-10 p-6 border rounded shadow">
             <h1 className="text-2xl font-bold mb-6 text-gray-600 text-center">Receipt</h1>
 
@@ -43,6 +46,12 @@ function ReceiptPage() {
             <div className="text-right mt-6 text-xl font-semibold">
                 Total Amount: <span className="text-black">${totalAmount.toFixed(2)}</span>
             </div>
+             <button 
+                className="bg-blue-600 text-white px-6 py-2 mt-4 rounded hover:bg-blue-700"
+                // style={{float:"right"}}
+            >
+              Proceed to Payment
+            </button>
         </div>
     </div>
   );

@@ -108,22 +108,22 @@ export default function AdminProducts(){
         });
         toast.success("Product Updated Successfully!");
         } else {
-        // For adding new product, send FormData with the image
-        const formData = new FormData();
-        formData.append("name", form.name);
-        formData.append("description", form.description);
-        formData.append("price", form.price);
-        formData.append("stock", form.stock);
-        formData.append("category_id", form.category_id);
-        if (form.image) formData.append("image", form.image);
+            // For adding new product, send FormData with the image
+            const formData = new FormData();
+            formData.append("name", form.name);
+            formData.append("description", form.description);
+            formData.append("price", form.price);
+            formData.append("stock", form.stock);
+            formData.append("category_id", form.category_id);
+            if (form.image) formData.append("image", form.image);
 
-        await api.post("/admin/products", formData, {
-            headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-            },
-        });
-        toast.success("Product Added Successfully!");
+            await api.post("/admin/products", formData, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+                },
+            });
+            toast.success("Product Added Successfully!");
         }
 
         setShowModal(false);
@@ -289,15 +289,15 @@ export default function AdminProducts(){
                     <td className="p-3 border text-center">
                         <button
                         onClick={() => handleEdit(prod)}
-                        className="px-3 py-1 text-sm bg-yellow-400 text-white rounded hover:bg-yellow-500 mr-2"
+                        className="px-3 py-1 text-sm bg-blue-400 text-white rounded hover:bg-yellow-500 mr-2"
                         >
-                        Edit
+                        <i className="fa fa-edit"></i>
                         </button>
                         <button
                         onClick={() => handleDelete(prod.id)}
                         className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
                         >
-                        Delete
+                        <i className="fa fa-trash"></i>
                         </button>
                     </td>
                     </tr>
