@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import api from '../api/axios';
+import { useCart } from '../context/CartContext';
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function HomeIndexPage() {
   const navigate = useNavigate();
@@ -28,13 +30,16 @@ export default function HomeIndexPage() {
     fetchData();
   }, []);
 
-  const handleAddToCart = (productId) => {
+  const { cartItems, addToCart, totalItems } = useCart();
+
+  const handleAddToCart = (product) => {
     if (!user) {
       alert('Please log in to add products to your cart.');
       navigate('/login');
       return;
     }
-    console.log('Product added to cart:', productId);
+    console.log('Product added to cart:', product.name);
+    addToCart(product);
   };
 
   return (
@@ -47,6 +52,14 @@ export default function HomeIndexPage() {
           <Link to="/categories" className="hover:text-blue-600">Categories</Link>
           <Link to="/products" className="hover:text-blue-600">Products</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
+          <Link to="/cart" className="relative">
+            <FaShoppingCart size={22} />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
+                {totalItems}
+              </span>
+            )}
+          </Link>
           {user ? (
             <Link to="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Logout</Link>
           ) : (
@@ -58,7 +71,7 @@ export default function HomeIndexPage() {
       {/* Carousel */}
       <div className="relative w-full h-[400px] overflow-hidden">
         <div className="w-full h-full bg-gradient-to-r from-blue-400 to-blue-600 flex flex-col justify-center items-center text-white text-center">
-          <h1 className="text-4xl font-bold mb-3">Welcome to Mim Online Store</h1>
+          <h1 className="text-4xl font-bold mb-3">Welcome to Gloria's Online Store</h1>
           <p className="max-w-xl">Your one-stop destination for quality products and fast delivery.</p>
         </div>
       </div>
@@ -96,7 +109,7 @@ export default function HomeIndexPage() {
               <h3 className="font-semibold text-gray-700">{product.name}</h3>
               <p className="text-green-600 font-bold mb-3">${product.price}</p>
               <button
-                onClick={() => handleAddToCart(product.id)}
+                onClick={() => handleAddToCart(product)}
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 Add to Cart
@@ -116,7 +129,7 @@ export default function HomeIndexPage() {
               <h3 className="font-semibold text-gray-700">{product.name}</h3>
               <p className="text-green-600 font-bold mb-3">${product.price}</p>
               <button
-                onClick={() => handleAddToCart(product.id)}
+                onClick={() => handleAddToCart(product)}
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 Add to Cart

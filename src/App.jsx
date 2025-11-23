@@ -7,6 +7,7 @@ import AdminCategories from "./pages/AdminCategories";
 import AdminProducts from "./pages/AdminProducts";
 import AdminOrders from "./pages/AdminOrders";
 import HomeIndexPage from "./pages/HomeIndexPage";
+import CartPage from "./pages/CartPage";
 
 export default function App(){
   return (
@@ -18,7 +19,8 @@ export default function App(){
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/categories" element={<AdminCategories />} />
         <Route path="/admin/products" element={<AdminProducts />} />
-        <Route path="/admin/orders" element={<AdminOrders />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />  
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </Router>
   );
