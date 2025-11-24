@@ -9,6 +9,7 @@ import AdminOrders from "./pages/AdminOrders";
 import HomeIndexPage from "./pages/HomeIndexPage";
 import CartPage from "./pages/CartPage";
 import ReceiptPage from "./pages/ReceiptPage";
+import PaymentPage from "./pages/PaymentPage";
 
 export default function App(){
   return (
@@ -23,6 +24,7 @@ export default function App(){
         <Route path="/admin/orders" element={<AdminOrders />} />  
         <Route path="/cart" element={<CartPage />} />
         <Route path="/receipt" element={<ReceiptPage />} />
+        <Route path="/payment" element={<PaymentPage />}/>
       </Routes>
     </Router>
   );

@@ -1,7 +1,14 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavbarComponent from "../components/NavbarComponent";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
-function ReceiptPage() {
+const stripePromise = loadStripe("pk_test_51SWmLsGX7IdPsrl8yQT9MrxqPvECwkLnosfTur9r0gDRevhliGo0dbGWWUt9FP8MmE2IUKgmqO4ujwjVDF4tZQAs00ASxmd8gZ");
+
+
+export default function ReceiptPage() {
+
+  const navigate = useNavigate();
   const location = useLocation();
   const { cartItems } = location.state || { cartItems: [] };
 
@@ -11,6 +18,24 @@ function ReceiptPage() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const handleCheckout = async () => {
+    try {
+      if(cartItems.length === 0){
+        toast.error("There Are No Items In The Cart")
+      }
+
+      const response = await axios.post("http://127.0.0.1:8000/api/create-checkout-session", 
+        { products:cartItems }
+      );
+
+      const { url } = response.data;
+      window.location.href = url; // Redirecting to Stripe Checkout
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+      alert("Failed to start payment process. Please try again.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white p-10">
@@ -46,15 +71,26 @@ function ReceiptPage() {
             <div className="text-right mt-6 text-xl font-semibold">
                 Total Amount: <span className="text-black">${totalAmount.toFixed(2)}</span>
             </div>
-             <button 
+             {/* <button 
                 className="bg-blue-600 text-white px-6 py-2 mt-4 rounded hover:bg-blue-700"
                 // style={{float:"right"}}
+                onClick={()=>navigate("/payment", {
+                  state: { cartItems, totalAmount },
+                })
+              }
             >
-              Proceed to Payment
-            </button>
+              Proceed to Payment 
+            </button> */}
+
+            <button
+            onClick={handleCheckout}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow"
+          >
+            Proceed To Pay
+          </button>
         </div>
     </div>
   );
 }
 
-export default ReceiptPage;
+// export default ReceiptPage;
