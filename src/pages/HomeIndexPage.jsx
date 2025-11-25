@@ -16,9 +16,10 @@ export default function HomeIndexPage() {
 
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  // const { addToCart, totalItems } = useCart();
 
-  const { cartItems, addToCart, updateQuantity, totalItems } = useCart();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const { addToCart, } = useCart();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,8 +41,8 @@ export default function HomeIndexPage() {
 
   const handleAddToCart = (product) => {
     if (!user) {
-      alert('Please log in to add products to your cart.');
-      navigate('/login');
+      setShowLoginModal(true);       
+      // navigate('/login');
       return;
     }
     console.log('Product added to cart:', product.name);
@@ -135,7 +136,7 @@ export default function HomeIndexPage() {
       {/* Categories Section */}
       <section className="px-10 py-16">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">Product Categories</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-12">Product Categories</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {categories.slice(0, 4).map((cat) => (
               <div 
@@ -164,7 +165,7 @@ export default function HomeIndexPage() {
       {/* Products Section */}
       <section className="px-10 py-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">Featured Products</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-12">Featured Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -176,7 +177,7 @@ export default function HomeIndexPage() {
       {/* Popular Products Section */}
       <section className="px-10 py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8">Most Sought After</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-12">Most Sought After</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {popularProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -245,7 +246,7 @@ export default function HomeIndexPage() {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                className="px-4 py-2 rounded bg-red-400"
               >
                 No
               </button>
@@ -254,6 +255,36 @@ export default function HomeIndexPage() {
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
                 Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showLoginModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded shadow-md w-96 text-center">
+            <h2 className="text-lg font-semibold mb-4 text-gray-800">
+              Login Required!
+            </h2>
+            <p className="text-gray-600 mb-6">
+              You must login to view your cart and add items.
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setShowLoginModal(false)}
+                className="px-4 py-2 rounded bg-red-600"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setShowLoginModal(false);
+                  navigate("/login");
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Proceed to Login
               </button>
             </div>
           </div>
