@@ -13,28 +13,40 @@ export default function ReceiptPage() {
   const { cartItems } = location.state || { cartItems: [] };
 
   console.log(cartItems);
-
+oka
   const totalAmount = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
-  const handleCheckout = async () => {
-    try {
-      if(cartItems.length === 0){
-        toast.error("There Are No Items In The Cart")
-      }
+  // const handleCheckout = async () => {
+  //   try {
+  //     if(cartItems.length === 0){
+  //       toast.error("There Are No Items In The Cart")
+  //     }
 
-      const response = await axios.post("http://127.0.0.1:8000/api/create-checkout-session", 
-        { products:cartItems }
-      );
+  //     const response = await axios.post("http://127.0.0.1:8000/api/create-checkout-session", 
+  //       { products:cartItems }
+  //     );
 
-      const { url } = response.data;
-      window.location.href = url; // Redirecting to Stripe Checkout
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-      alert("Failed to start payment process. Please try again.");
+  //     const { url } = response.data;
+  //     window.location.href = url; // Redirecting to Stripe Checkout
+  //   } catch (error) {
+  //     console.error("Error creating checkout session:", error);
+  //     alert("Failed to start payment process. Please try again.");
+  //   }
+  // };
+
+  const handleProceedToPayment = () => {
+    if (cartItems.length === 0) {
+      toast.error("Your cart is empty!");
+      return;
     }
+
+    // Redirect to payment page with cart data
+    navigate("/payment", {
+      state: { cartItems, totalAmount },
+    });
   };
 
   return (
@@ -83,7 +95,7 @@ export default function ReceiptPage() {
             </button> */}
 
             <button
-            onClick={handleCheckout}
+            onClick={handleProceedToPayment}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow"
           >
             Proceed To Pay
