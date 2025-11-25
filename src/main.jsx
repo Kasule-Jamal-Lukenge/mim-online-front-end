@@ -7,16 +7,7 @@ import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { Toaster } from 'react-hot-toast'
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { CartProvider } from './context/CartContext.jsx'
-
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <Provider store={store}>
-//       <App />
-//     </Provider>
-//   </StrictMode>
-// )
-
+import { CartProvider } from './context/CartContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
