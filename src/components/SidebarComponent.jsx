@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function SidebarComponent({ onNavigate }) {
+export default function SidebarComponent() {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -65,7 +67,7 @@ export default function SidebarComponent({ onNavigate }) {
         {menuItems.map((item, index) => (
           <button
             key={index}
-            onClick={() => onNavigate && onNavigate(item.path)}
+            onClick={() => navigate(item.path)}
             className="w-full flex items-center gap-4 px-4 py-3 bg-blue-900 hover:bg-blue-800 transition group"
             title={isCollapsed ? item.title : ''}
           >
