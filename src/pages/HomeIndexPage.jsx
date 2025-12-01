@@ -195,23 +195,23 @@ export default function HomeIndexPage() {
               <input 
                 type="text" 
                 placeholder="Full Name" 
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                className="border bg-white border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
               />
               <input 
                 type="email" 
                 placeholder="Email Address" 
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                className="border bg-white border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" 
               />
             </div>
             <input 
               type="text" 
               placeholder="Subject" 
-              className="border border-gray-300 rounded-lg p-3 w-full mt-6 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+              className="border bg-white border-gray-300 rounded-lg p-3 w-full mt-6 focus:outline-none focus:ring-2 focus:ring-blue-500" 
             />
             <textarea 
               placeholder="Your Message" 
               rows="5" 
-              className="border border-gray-300 rounded-lg p-3 w-full mt-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border bg-white border-gray-300 rounded-lg p-3 w-full mt-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
             <div className="text-center mt-8">
               <button 

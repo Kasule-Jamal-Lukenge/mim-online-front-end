@@ -258,19 +258,19 @@ export default function AdminOrders() {
             <div className="px-8 py-6">
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
-                  <p className="text-sm text-gray-500 mb-1">Customer</p>
+                  <p className="text-sm text-gray-500 mb-1">Customer:</p>
                   <p className="text-lg font-semibold text-gray-800">
                     {selectedOrder.user?.first_name} {selectedOrder.user?.last_name}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 mb-1">Order Date</p>
+                  <p className="text-sm text-gray-500 mb-1">Order Date:</p>
                   <p className="text-lg font-semibold text-gray-800">
                     {new Date(selectedOrder.created_at).toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 mb-1">Status</p>
+                  <p className="text-sm text-gray-500 mb-1">Status:</p>
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                     selectedOrder.status === 'Delivered' 
                       ? 'bg-green-100 text-green-800'
@@ -347,7 +347,7 @@ export default function AdminOrders() {
               <div className="flex justify-end">
                 <button
                   onClick={() => setShowDetails(false)}
-                  className="px-6 py-2.5 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
+                  className="px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-white hover:text-red-500 transition-colors font-medium"
                 >
                   Close
                 </button>
@@ -372,14 +372,14 @@ export default function AdminOrders() {
 
             <div className="px-8 py-6">
               <div className="mb-4">
-                <p className="text-sm text-gray-500 mb-1">Customer</p>
+                <p className="text-sm text-gray-500 mb-1">Customer:</p>
                 <p className="text-gray-800 font-medium">
                   {selectedOrder.user?.first_name} {selectedOrder.user?.last_name}
                 </p>
               </div>
 
               <div className="mb-6">
-                <p className="text-sm text-gray-500 mb-1">Current Status</p>
+                <p className="text-sm text-gray-500 mb-1">Current Status:</p>
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                   selectedOrder.status === 'Delivered' 
                     ? 'bg-green-100 text-green-800'
@@ -393,14 +393,14 @@ export default function AdminOrders() {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Update Status
+                  Update Status:
                 </label>
                 <select
                   value={selectedOrder.status}
                   onChange={(e) =>
                     setSelectedOrder({ ...selectedOrder, status: e.target.value })
                   }
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="w-full bg-white text-gray-600 border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 >
                   <option value="Received">Received</option>
                   <option value="In-Delivery">In-Delivery</option>

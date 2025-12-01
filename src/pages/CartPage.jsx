@@ -132,20 +132,73 @@ export default function CartPage() {
   const navigate = useNavigate();
 
   // 🟦 Placing order and saving to backend
+  // const handleCheckOut = async () => {
+  //   if (cartItems.length === 0) {
+  //     toast.error("Your cart is empty!");
+  //     return;
+  //   }
+
+  //   // If not logged in, stop here
+  //   if (!token) {
+  //     toast.error("You must login before placing an order.");
+  //     navigate("/login");
+  //     return;
+  //   }
+
+  //   // Preparing the order payload
+  //   const orderPayload = {
+  //     items: cartItems.map((item) => ({
+  //       product_id: item.id,
+  //       quantity: item.quantity,
+  //     })),
+  //   };
+
+  //   try {
+  //     const res = await api.post("/orders", orderPayload, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     toast.success("Order Saved Successfully!");
+  //     // console.log("Order response:", res.data);
+
+  //     // Optionally clear the cart
+  //     // localStorage.removeItem("cart");
+
+  //     // Redirecting to payment or confirmation page
+  //     navigate("/payment", {
+  //       state: {
+  //         orderId: res.data.order.id,
+  //         total: res.data.order.total_price,
+  //         items: cartItems,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Error placing order:", error);
+  //     if (error.response?.status === 401) {
+  //       toast.error("Session expired. Please Login Again.");
+  //       navigate("/login");
+  //     } else {
+  //       toast.error("Failed To Place Order. Please Try Again.");
+  //     }
+  //   }
+  // };
+
   const handleCheckOut = async () => {
+      console.log("Token:", token); // ✅ Add this
+
     if (cartItems.length === 0) {
       toast.error("Your cart is empty!");
       return;
     }
 
-    // If not logged in, stop here
     if (!token) {
       toast.error("You must login before placing an order.");
       navigate("/login");
       return;
     }
 
-    // Preparing the order payload
     const orderPayload = {
       items: cartItems.map((item) => ({
         product_id: item.id,
@@ -154,36 +207,45 @@ export default function CartPage() {
     };
 
     try {
-      const res = await api.post("/orders", orderPayload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      let res;
 
-      toast.success("Order Saved Successfully!");
-      // console.log("Order response:", res.data);
+      const orderId = localStorage.getItem("orderId");
 
-      // Optionally clear the cart
-      // localStorage.removeItem("cart");
+      if (orderId) {
+        // 🟨 Update existing order if one already exists
+        res = await api.put(`/orders/${orderId}/update-items`, orderPayload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        toast.success("Order Updated Successfully!");
+      } else {
+        // Creating a new order if none exists yet
+        res = await api.post("/orders", orderPayload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        localStorage.setItem("orderId", res.data.order.id);
+        toast.success("Order Placed Successfully!");
+      }
 
-      // Redirecting to payment or confirmation page
+      // Redirecting To payment page
       navigate("/payment", {
         state: {
           orderId: res.data.order.id,
+          orderNumber: res.data.order.order_number,
           total: res.data.order.total_price,
           items: cartItems,
         },
       });
     } catch (error) {
-      console.error("Error placing order:", error);
+      console.error("Error placing/updating order:", error);
       if (error.response?.status === 401) {
         toast.error("Session expired. Please Login Again.");
         navigate("/login");
       } else {
-        toast.error("Failed To Place Order. Please Try Again.");
+        toast.error("Failed To Place/Update Order. Please Try Again.");
       }
     }
   };
+
 
   const total = cartItems.reduce(
     (sum, item) => sum + (item.price * item.quantity),

@@ -67,7 +67,7 @@ export default function RegistrationPage(){
                         value={form.first_name}
                         onChange={handleChange}
                         required
-                        className="p-2 rounded w-full"
+                        className="p-2 rounded w-fulltext-gray-600 bg-white"
                     />
 
                     <input
@@ -77,7 +77,7 @@ export default function RegistrationPage(){
                         value={form.last_name}
                         onChange={handleChange}
                         required
-                        className="p-2 border rounded w-full"
+                        className="p-2 border rounded w-full text-gray-600 bg-white"
                     />
 
                      <input
@@ -87,7 +87,7 @@ export default function RegistrationPage(){
                         value={form.email}
                         onChange={handleChange}
                         required
-                        className="p-2 border rounded w-full"
+                        className="p-2 border rounded w-full text-gray-600 bg-white"
                     />
 
                     <input
@@ -97,7 +97,7 @@ export default function RegistrationPage(){
                         value={form.phone}
                         onChange={handleChange}
                         required
-                        className="p-2 border rounded w-full"
+                        className="p-2 border rounded w-full text-gray-600 bg-white"
                     />
 
                     <input
@@ -107,7 +107,7 @@ export default function RegistrationPage(){
                         value={form.password}
                         onChange={handleChange}
                         required
-                        className="p-2 border rounded w-full"
+                        className="p-2 border rounded w-full text-gray-600 bg-white"
                     />
 
                     <input 
@@ -117,7 +117,7 @@ export default function RegistrationPage(){
                         value={form.password_confirmation}
                         onChange={handleChange}
                         required
-                        className="p-2 border rounded w-full"
+                        className="p-2 border rounded w-full text-gray-600 bg-white"
                     />
 
                     <button

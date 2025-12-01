@@ -25,8 +25,9 @@ export default function PaymentPage() {
       : 0);
 
   const orderId = state?.orderId || null;
+  const orderNumber = state?.orderNumber || state?.order?.order_number || null;
 
-  // 🟡 Handling missing data (Direct Navigation / Refreshing)
+  // Handling missing data (Direct Navigation / Refreshing)
   if (!state || !cartItems.length) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-center">
@@ -92,7 +93,7 @@ export default function PaymentPage() {
           </h2>
           {orderId && (
             <p className="text-center text-gray-600 mb-3">
-              <strong>Order ID:</strong> #{orderId}
+              <strong>Order ID:</strong> {orderNumber}
             </p>
           )}
           <hr className="mb-6" />

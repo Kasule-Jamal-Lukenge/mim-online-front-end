@@ -29,7 +29,7 @@ export default function LoginPage(){
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center mb-6 text-blue-600">Admin Login</h2>
+                <h2 className="text-2xl font-bold text-center mb-6 text-blue-600">Login Here</h2>
 
                 {error && (
                     <p className="bg-red-100 text-red-600 p-2 rounded mb-4 text-center">
@@ -44,7 +44,7 @@ export default function LoginPage(){
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                            className="mt-1 block w-full text-gray-600 bg-white border-gray-300 rounded-md shadow-sm p-2"
                             required
                             placeholder="Enter Your Email or Phone..."
                         />
@@ -55,7 +55,7 @@ export default function LoginPage(){
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"
+                            className="mt-1 block w-full text-gray-600 bg-white border-gray-300 rounded-md shadow-sm p-2"
                             required
                             placeholder="Enter Your Password..."
                         />
