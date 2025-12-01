@@ -396,7 +396,7 @@ export default function AdminProducts(){
                                     onChange={handleChange}
                                     required
                                     placeholder="Enter product name"
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
+                                    className="w-full px-4 py-2.5 text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
                                 />
                             </div>
 
@@ -410,7 +410,7 @@ export default function AdminProducts(){
                                     onChange={handleChange}
                                     rows="3"
                                     placeholder="Enter product description"
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
+                                    className="w-full px-4 py-2.5 text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
                                 />
                             </div>
 
@@ -426,7 +426,7 @@ export default function AdminProducts(){
                                     required
                                     step="0.01"
                                     placeholder="0.00"
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
+                                    className="w-full px-4 py-2.5 text-gray-700  border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
                                 />
                             </div>
 
@@ -439,7 +439,7 @@ export default function AdminProducts(){
                                     value={form.category_id}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
+                                    className="w-full px-4 py-2.5 text-gray-700  border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white focus:border-blue-500 transition-all"
                                 >
                                     <option value="">Select Category</option>
                                     {categories.map((cat) => (

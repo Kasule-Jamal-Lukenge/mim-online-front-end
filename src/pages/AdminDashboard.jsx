@@ -148,6 +148,8 @@ export default function AdminDashboard(){
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!token) return; //Don’t fetch data if logged out
+        
         const fetchDashboardData = async () => {
             try{
                 const res = await api.get("/admin/analytics/summary", {

@@ -11,6 +11,9 @@ import CartPage from "./pages/CartPage";
 import ReceiptPage from "./pages/ReceiptPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
+import AllCustomersPage from "./pages/AllCustomersPage";
+import AllProductsPage from "./pages/AllProductsPage";
+import AllCategoriesPage from "./pages/AllCategoriesPage";  
 
 export default function App(){
   return (
@@ -27,6 +30,10 @@ export default function App(){
         <Route path="/receipt" element={<ReceiptPage />} />
         <Route path="/payment" element={<PaymentPage />}/>
         <Route path="/orders" element={<OrderHistoryPage />} />
+        <Route path="/admin/customers" element={<AllCustomersPage />}/>
+        <Route path="/products" element={<AllProductsPage />} />
+        <Route path="/categories" element={<AllCategoriesPage />} />
+
       </Routes>
     </Router>
   );
