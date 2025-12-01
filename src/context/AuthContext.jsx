@@ -24,6 +24,8 @@ export const AuthProvider = ({ children }) => {
         setToken(res.data.token);
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
+        // Returning both for immediate use
+        return { user: res.data.user, token: res.data.token };
     }
 
     const register = async(data) => {

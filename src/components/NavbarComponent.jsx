@@ -22,6 +22,22 @@ export default function NavbarComponent() {
     }
   };
 
+   // Showing Admin Navbar If The User Is An Admin
+  if (user?.role === "admin") {
+    return (
+      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-4 bg-white shadow-md">
+        <div className="text-2xl font-bold text-blue-700">Alostore Africa</div>
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+        >
+          Logout
+        </button>
+      </nav>
+    );
+  }
+
+  //Displaying The Regular Navigation Bar For Regular Users And Guests
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-4 bg-white shadow-md">

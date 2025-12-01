@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 export default function LoginPage(){
     const {login} = useContext(AuthContext);
@@ -16,12 +17,23 @@ export default function LoginPage(){
         setError("");
         setLoading(true);
 
-        try{
-            await login(identifier, password);
-            navigate("/admin/dashboard");
-        }catch(err){
+        try {
+            // Calling Login() From AuthContext
+            const { user } = await login(identifier, password);
+
+            // Implementing Role-Based Redirection
+            if (user.role === "admin") {
+                toast.success("Welcome, Admin!");
+                navigate("/admin/dashboard");
+            } else {
+                toast.success("Login Successful!");
+                navigate("/");
+            }
+        } catch (err) {
             console.error("Login error:", err);
-            setError("Invalid email/phone or password");
+            setError("Invalid Email/Phone Or assword");
+            toast.error("Login Failed. Please Try Again.");
+        } finally {
             setLoading(false);
         }
     };
@@ -44,7 +56,7 @@ export default function LoginPage(){
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
-                            className="mt-1 block w-full text-gray-600 bg-white border-gray-300 rounded-md shadow-sm p-2"
+                            className="mt-1 block w-full text-gray-700 bg-white border-gray-300 rounded-md shadow-sm p-2"
                             required
                             placeholder="Enter Your Email or Phone..."
                         />
