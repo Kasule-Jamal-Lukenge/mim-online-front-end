@@ -27,18 +27,22 @@ export default function NavbarComponent() {
       <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-4 bg-white shadow-md">
         <div className="text-2xl font-bold text-blue-700">Alostore Africa</div>
         <div className="flex items-center gap-6 text-gray-700 font-medium">
-          <Link to="/" className="hover:text-blue-600 transition-colors">
+          <Link to="/" className="text-blue-700 hover:text-blue-600 transition-colors">
             Home
           </Link>
-          <Link to="/categories" className="hover:text-blue-600 transition-colors">
+          <Link to="/categories" className="text-blue-700 hover:text-blue-600 transition-colors">
             Categories
           </Link>
-          <Link to="/products" className="hover:text-blue-600 transition-colors">
+          <Link to="/products" className="text-blue-700 hover:text-blue-600 transition-colors">
             Products
           </Link>
-          <Link to="/contact" className="hover:text-blue-600 transition-colors">
+          <Link to="/contact" className="text-blue-700 hover:text-blue-600 transition-colors">
             Contact
           </Link>
+          <Link to="/orders" className="text-blue-700 hover:text-blue-700 font-medium transition">
+            My Orders
+          </Link>
+
 
           {/* Cart icon */}
           <div

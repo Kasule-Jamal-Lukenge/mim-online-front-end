@@ -10,6 +10,7 @@ import HomeIndexPage from "./pages/HomeIndexPage";
 import CartPage from "./pages/CartPage";
 import ReceiptPage from "./pages/ReceiptPage";
 import PaymentPage from "./pages/PaymentPage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
 
 export default function App(){
   return (
@@ -25,6 +26,7 @@ export default function App(){
         <Route path="/cart" element={<CartPage />} />
         <Route path="/receipt" element={<ReceiptPage />} />
         <Route path="/payment" element={<PaymentPage />}/>
+        <Route path="/orders" element={<OrderHistoryPage />} />
       </Routes>
     </Router>
   );
