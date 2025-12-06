@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import logo from "../assets/alostore-logo.jpg";
 
 export default function LoginPage(){
     const {login} = useContext(AuthContext);
@@ -41,6 +42,14 @@ export default function LoginPage(){
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+                {/* Logo Section */}
+                <div className="flex justify-center mb-4">
+                    <img 
+                        src={logo} 
+                        alt="Alostore Africa Logo" 
+                        className="w-20 h-20 h-auto border-2 rounded-full" // Adjust width as you like
+                    />
+                </div>
                 <h2 className="text-2xl font-bold text-center mb-6 text-blue-600">Login Here</h2>
 
                 {error && (
@@ -56,7 +65,7 @@ export default function LoginPage(){
                             type="text"
                             value={identifier}
                             onChange={(e) => setIdentifier(e.target.value)}
-                            className="mt-1 block w-full text-gray-700 bg-white border-gray-300 rounded-md shadow-sm p-2"
+                            className="mt-1 block w-full text-gray-700 bg-white border border-gray-400 rounded-md shadow-sm p-2"
                             required
                             placeholder="Enter Your Email or Phone..."
                         />
@@ -67,7 +76,7 @@ export default function LoginPage(){
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="mt-1 block w-full text-gray-600 bg-white border-gray-300 rounded-md shadow-sm p-2"
+                            className="mt-1 block w-full text-gray-600 bg-white border border-gray-400 rounded-md shadow-sm p-2"
                             required
                             placeholder="Enter Your Password..."
                         />
@@ -80,6 +89,16 @@ export default function LoginPage(){
                     >
                         {loading ? "Logging in..." : "Login"}
                     </button>
+
+                    <p className="text-center text-gray-600 text-sm mt-4">
+                        Don't Have An Account?{" "}
+                        <span
+                            onClick={() => navigate("/register")}
+                            className="text-blue-600 cursor-pointer hover:underline font-medium"
+                        >
+                            Let's Register
+                        </span>
+                    </p>
                 </form>
 
             </div>

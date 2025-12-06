@@ -155,7 +155,7 @@ export default function AllCustomersPage() {
         <div className="pt-20 p-8">
           {/* Page Heading */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Customers</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mt-8 mb-2">Customers</h1>
             <p className="text-gray-600">View and manage registered customers</p>
           </div>
 
@@ -173,7 +173,7 @@ export default function AllCustomersPage() {
                     setCurrentPage(1);
                   }}
                   placeholder="Search customers..."
-                  className="pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg w-64 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="pl-10 pr-4 py-2.5 text-gray-600 bg-white border border-gray-300 rounded-lg w-64 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 />
               </div>
 
@@ -184,11 +184,11 @@ export default function AllCustomersPage() {
                   setItemsPerPage(Number(e.target.value));
                   setCurrentPage(1);
                 }}
-                className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="px-4 py-2.5 text-gray-600 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
               >
+                <option value={5}>5 per page</option>
                 <option value={10}>10 per page</option>
-                <option value={25}>25 per page</option>
-                <option value={50}>50 per page</option>
+                <option value={20}>20 per page</option>
               </select>
             </div>
 

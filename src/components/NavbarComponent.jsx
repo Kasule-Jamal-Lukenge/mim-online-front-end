@@ -29,7 +29,7 @@ export default function NavbarComponent() {
         <div className="text-2xl font-bold text-blue-700">Alostore Africa</div>
         <button
           onClick={handleLogout}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          className="border border-2px border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-500 hover:text-white hover:border-red-500"
         >
           Logout
         </button>
