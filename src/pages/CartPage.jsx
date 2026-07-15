@@ -256,7 +256,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-gray-100">
       <NavbarComponent />
 
-      <div className="pt-24 px-6 pb-6">
+      <div className="pt-24 px-4 sm:px-6 pb-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-blue-700 mb-6">Your Cart</h1>
 
@@ -265,9 +265,9 @@ export default function CartPage() {
               <p className="text-gray-600 text-lg">Your Cart Is Empty.</p>
             </div>
           ) : (
-            <div className="bg-white shadow rounded-lg p-6">
-              {/* Table Header */}
-              <div className="grid grid-cols-12 gap-4 pb-3 border-b-2 font-semibold text-gray-700">
+            <div className="bg-white shadow rounded-lg p-4 sm:p-6">
+              {/* Table Header (desktop only) */}
+              <div className="hidden sm:grid sm:grid-cols-12 gap-4 pb-3 border-b-2 font-semibold text-gray-700">
                 <div className="col-span-5">Product</div>
                 <div className="col-span-2 text-center">Unit Price</div>
                 <div className="col-span-3 text-center">Quantity</div>
@@ -278,9 +278,9 @@ export default function CartPage() {
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="grid grid-cols-12 gap-4 items-center border-b py-4"
+                  className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 sm:items-center border-b py-4"
                 >
-                  <div className="col-span-5 flex items-center gap-3">
+                  <div className="sm:col-span-5 flex items-center gap-3">
                     <img
                       src={item.image_url}
                       alt={item.name}
@@ -293,37 +293,42 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <div className="col-span-2 text-center">
-                    <p className="text-green-600 font-medium">
-                      ${Number(item.price).toFixed(2)}
-                    </p>
+                  <div className="flex items-center justify-between sm:contents">
+                    <div className="sm:col-span-2 sm:text-center">
+                      <span className="sm:hidden text-xs text-gray-500 mr-1">
+                        Price:
+                      </span>
+                      <span className="text-green-600 font-medium">
+                        ${Number(item.price).toFixed(2)}
+                      </span>
+                    </div>
+
+                    <div className="sm:col-span-3 flex items-center justify-center gap-2">
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
+                      >
+                        -
+                      </button>
+                      <span className="text-gray-700 px-4 py-1 border border-gray-300 rounded min-w-[50px] text-center">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="col-span-3 flex items-center justify-center gap-2">
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
-                    >
-                      -
-                    </button>
-                    <span className="text-gray-700 px-4 py-1 border border-gray-300 rounded min-w-[50px] text-center">
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <div className="col-span-2 text-right">
+                  <div className="flex items-center justify-between sm:col-span-2 sm:flex-col sm:items-end sm:justify-center">
                     <p className="text-gray-800 font-semibold text-lg">
                       ${(Number(item.price) * item.quantity).toFixed(2)}
                     </p>
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="text-white bg-red-600 hover:bg-red-700 text-sm mt-1 px-3 py-1 rounded transition-colors"
+                      className="text-white bg-red-600 hover:bg-red-700 text-sm sm:mt-1 px-3 py-1 rounded transition-colors"
                     >
                       <i className="fa fa-trash"></i>
                     </button>
@@ -333,12 +338,12 @@ export default function CartPage() {
 
               {/* Cart Summary */}
               <div className="mt-6 pt-4 border-t-2">
-                <div className="flex justify-end items-center gap-8">
+                <div className="flex flex-col sm:flex-row sm:justify-end items-center gap-4 sm:gap-8">
                   <h2 className="text-2xl font-bold text-gray-800">
                     Total: ${total.toFixed(2)}
                   </h2>
                   <button
-                    className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+                    className="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
                     onClick={handleCheckOut}
                   >
                     Place Order

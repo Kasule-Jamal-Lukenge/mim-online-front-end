@@ -13,7 +13,8 @@ import PaymentPage from "./pages/PaymentPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import AllCustomersPage from "./pages/AllCustomersPage";
 import AllProductsPage from "./pages/AllProductsPage";
-import AllCategoriesPage from "./pages/AllCategoriesPage";  
+import AllCategoriesPage from "./pages/AllCategoriesPage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 export default function App(){
   return (
@@ -33,6 +34,7 @@ export default function App(){
         <Route path="/admin/customers" element={<AllCustomersPage />}/>
         <Route path="/products" element={<AllProductsPage />} />
         <Route path="/categories" element={<AllCategoriesPage />} />
+        <Route path="/contact" element={<ContactUsPage />} />
 
       </Routes>
     </Router>

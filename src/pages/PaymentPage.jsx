@@ -272,7 +272,7 @@ export default function PaymentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 pt-24 px-4 sm:px-6 pb-6">
       <NavbarComponent />
       <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center">
         Proceed to Payment
@@ -295,7 +295,8 @@ export default function PaymentPage() {
 
           {/* If we have items, display them, else show total only */}
           {cartItems.length > 0 ? (
-            <table className="w-full border-collapse text-black text-sm">
+            <div className="overflow-x-auto">
+            <table className="w-full min-w-[480px] border-collapse text-black text-sm">
               <thead>
                 <tr className="border-b text-left">
                   <th className="pb-2 w-2/5">Product</th>
@@ -321,6 +322,7 @@ export default function PaymentPage() {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <p className="text-center text-gray-500 mt-4">
               No product details available for this order.

@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-color {
+  0%, 100% {
+    border-top-color: #2563eb; /* blue-600 */
+    border-right-color: #2563eb;
+  }
+  50% {
+    border-top-color: #ffffff;
+    border-right-color: #ffffff;
+  }
+}
+
+.spinner-ring {
+  animation: spinner-spin 0.7s linear infinite, spinner-color 1.4s ease-in-out infinite;
+}
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import api from "../api/axios";
 import NavbarComponent from "../components/NavbarComponent";
+import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -55,20 +56,20 @@ export default function OrderHistoryPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       <NavbarComponent />
-      <div className="pt-24 px-6 pb-6 max-w-6xl mx-auto">
+      <div className="pt-24 px-4 sm:px-6 pb-6 max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
           My Order History
         </h1>
 
         {loading ? (
-          <p className="text-center text-gray-500">Loading your orders...</p>
+          <Spinner label="Loading your orders..." className="py-24" />
         ) : orders.length === 0 ? (
           <div className="bg-white shadow rounded-lg p-8 text-center">
             <p className="text-gray-600 text-lg">You haven’t placed any orders yet.</p>
           </div>
         ) : (
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
-            <table className="w-full border-collapse text-gray-800">
+          <div className="bg-white shadow-md rounded-lg overflow-x-auto">
+            <table className="w-full min-w-[640px] border-collapse text-gray-800">
               <thead className="bg-gray-200 text-gray-700 font-semibold">
                 <tr>
                   <th className="py-3 px-4 text-left">Order No</th>
